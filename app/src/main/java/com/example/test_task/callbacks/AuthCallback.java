@@ -2,7 +2,7 @@ package com.example.test_task.callbacks;
 
 import com.example.test_task.api.messages.AuthResponse;
 
-public interface SuccessCallback {
+public interface AuthCallback {
 
     void onSuccess(AuthResponse response);
 

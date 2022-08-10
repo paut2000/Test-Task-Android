@@ -2,7 +2,7 @@ package com.example.test_task.service;
 
 import com.example.test_task.api.Api;
 import com.example.test_task.api.messages.AuthResponse;
-import com.example.test_task.callbacks.SuccessCallback;
+import com.example.test_task.callbacks.AuthCallback;
 
 import java.io.IOException;
 
@@ -14,7 +14,7 @@ import retrofit2.Response;
 
 public class AuthService {
 
-    public void login(String username, String password, SuccessCallback callback) {
+    public void login(String username, String password, AuthCallback callback) {
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("grant_type", "password")
