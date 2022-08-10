@@ -1,16 +1,10 @@
-package com.example.test_task;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
+package com.example.test_task.service;
 
 import com.example.test_task.api.Api;
-import com.example.test_task.api.messages.AuthRequest;
 import com.example.test_task.api.messages.AuthResponse;
+import com.example.test_task.callbacks.SuccessCallback;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -18,18 +12,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class AuthService {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+    public void login(String username, String password, SuccessCallback callback) {
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("grant_type", "password")
-                .addFormDataPart("username", "tester")
-                .addFormDataPart("password", "tester")
+                .addFormDataPart("username", username)
+                .addFormDataPart("password", password)
                 .build();
 
         Api.getInstance().getAuthApi().getToken(
@@ -39,22 +29,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                 if (response.isSuccessful()) {
-                    AuthResponse authResponse = response.body();
-                    System.out.println(authResponse);
+                    callback.onSuccess(response.body());
                 } else {
                     try {
-                        System.out.println("Hello not good " + response.errorBody().string().toString());
+                        System.out.println("Not good " + response.errorBody().string());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-
             }
 
             @Override
             public void onFailure(Call<AuthResponse> call, Throwable t) {
-                System.out.println("Hello bad");
+                System.out.println("So Bad");
             }
         });
     }
+
 }
