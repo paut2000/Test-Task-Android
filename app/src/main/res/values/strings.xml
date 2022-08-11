@@ -1,12 +1,15 @@
 <resources>
     <string name="app_name">Test-Task</string>
     <string name="title_activity_auth">AuthActivity</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="login">Login</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="password">Password</string>
+    <string name="login_button">login</string>
+    <string name="main_info">Main Info</string>
+    <string name="role_id">Role ID</string>
+    <string name="default_string">default</string>
+    <string name="username">Username</string>
+    <string name="e_mail">E-mail</string>
+    <string name="permissions">Permissions</string>
+    <string name="logout">logout</string>
 </resources>

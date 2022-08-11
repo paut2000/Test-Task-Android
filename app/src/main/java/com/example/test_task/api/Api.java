@@ -1,11 +1,12 @@
 package com.example.test_task.api;
 
-import java.io.IOException;
+import android.os.Build;
 
-import okhttp3.Interceptor;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -13,6 +14,8 @@ public class Api {
 
     private static Api instance = null;
     public static final String BASE_URL = "http://smart.eltex-co.ru:8271/api/v1/";
+    private static final String credentials = "android-client:password";
+    private static String token;
 
     private IAuthApi authApi;
     private IUserApi userApi;
@@ -24,6 +27,10 @@ public class Api {
         return instance;
     }
 
+    public static void setToken(String token) {
+        Api.token = token;
+    }
+
     public IAuthApi getAuthApi() {
         if (authApi == null) {
             buildAuthApi();
@@ -33,13 +40,28 @@ public class Api {
 
     public IUserApi getUserApi() {
         if (userApi == null) {
-            buildUserApi();
+            if (token == null) throw new RuntimeException("Access token wasn't set");
+            buildUserApi(token);
         }
         return userApi;
     }
 
     private void buildAuthApi() {
+
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(chain -> {
+            String encodeCredentials = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                encodeCredentials = Base64.getEncoder().encodeToString(credentials.getBytes(StandardCharsets.UTF_8));
+            }
+
+            Request newRequest  = chain.request().newBuilder()
+                    .addHeader("Authorization", "Basic " + encodeCredentials)
+                    .build();
+            return chain.proceed(newRequest);
+        }).build();
+
         Retrofit retrofit = new Retrofit.Builder()
+                .client(client)
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -47,10 +69,10 @@ public class Api {
         this.authApi = retrofit.create(IAuthApi.class);
     }
 
-    private void buildUserApi() {
+    private void buildUserApi(String token) {
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(chain -> {
             Request newRequest  = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer " + "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ0ZXN0ZXIiLCJhdWQiOiJhbmRyb2lkLWNsaWVudCIsIm5iZiI6MTY2MDEzMTUzNSwic2NvcGUiOlsidHJ1c3QiLCJyZWFkIiwid3JpdGUiXSwiaXNzIjoiaHR0cDpcL1wvc21hcnQuZWx0ZXgtY28ucnU6ODA3MSIsImV4cCI6MTY2MDEzNTEzNSwiaWF0IjoxNjYwMTMxNTM1LCJqdGkiOiJkNzA4MTA0OS02Njc1LTQzOWQtOWM4ZS05YTZmMWY4ZDE3ODAifQ.QDBZIjjfKLZ6vLm3Tf1Lo6kw7lSfdWvDAKqNnKvPucqmaaska_ysdyw4vjNdYsNJctuInpzJDC_fbnhIXI2zyu6lgQNtrHN_ZNLUKoMcED1z0M6VPeO8YtnrMZdr0nugUlt-txGu3YOzuA6XsBVtBKu00eLBdCff_3TSO0ExPhNTWBSQyg2iJsvLgbuuHavVxEXlFbLBc5MWX3tdp2g-A_HG7hHWQfjD-duRjNqN9X8bytBAm4W4rwRJCuSt3rNRE4a5dCz9lfO4KTWF6G_Mr1GFwXX1hK-jNgfd4438-Yu7EKE7zuoczz59oKVk_bXVmNHhNfsLD5X6SToUgUcA9A")
+                    .addHeader("Authorization", "Bearer " + token)
                     .build();
             return chain.proceed(newRequest);
         }).build();

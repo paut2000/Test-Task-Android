@@ -11,22 +11,34 @@
 
         <TableRow android:layout_margin="10dp">
 
+            <Button
+                android:id="@+id/logoutButton"
+                android:layout_weight="@integer/material_motion_duration_long_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/logout"
+                android:layout_margin="20dp"/>
+
+        </TableRow>
+
+        <TableRow android:layout_margin="10dp">
+
             <TextView
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:textSize="20sp"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Role ID"/>
+                android:text="@string/role_id"/>
 
             <TextView
                 android:layout_weight="1"
                 android:textSize="20sp"
                 android:textAlignment="center"
                 android:id="@+id/roleIdText"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="default"/>
+                android:text="@string/default_string"/>
 
         </TableRow>
 
@@ -36,18 +48,18 @@
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:textSize="20sp"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Username"/>
+                android:text="@string/username"/>
 
             <TextView
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:id="@+id/usernameText"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="default"/>
+                android:text="@string/default_string"/>
 
         </TableRow>
 
@@ -57,18 +69,18 @@
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:textSize="20sp"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="E-mail"/>
+                android:text="@string/e_mail"/>
 
             <TextView
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:id="@+id/emailText"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="default"/>
+                android:text="@string/default_string"/>
 
         </TableRow>
 
@@ -80,7 +92,7 @@
                 android:textSize="30sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Permissions"/>
+                android:text="@string/permissions"/>
 
         </TableRow>
 

@@ -12,7 +12,6 @@ public interface IAuthApi {
 
     @POST("oauth/token")
     Call<AuthResponse> getToken(
-            @Header("Authorization") String authHeader,
             @Body RequestBody body
     );
 

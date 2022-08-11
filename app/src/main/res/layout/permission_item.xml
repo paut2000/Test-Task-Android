@@ -9,7 +9,7 @@
         android:id="@+id/permissionText"
         android:textSize="20sp"
         android:text="default"
-        android:layout_gravity="center"
+        android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
